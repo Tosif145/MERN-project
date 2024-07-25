@@ -1,8 +1,21 @@
 import express from 'express';
 const router = express.Router();
 
-import { createUser , deleteUser, getAllUsers, getUserById, loginUser, logoutCurrentUser, updateUserProfile, userProfile} from '../controllers/userController.js';
-import { authenticateUser,authorizeAdmin } from '../middlewares/authMiddleware.js';
+import {    createUser ,
+            deleteUser, 
+            getAllUsers, 
+            getUserById, 
+            loginUser, 
+            logoutCurrentUser, 
+            updateUserById, 
+            updateUserProfile, 
+            userProfile
+        } from '../controllers/userController.js';
+
+import {   
+           authenticateUser,
+           authorizeAdmin 
+       } from '../middlewares/authMiddleware.js';
 
 
 
@@ -338,6 +351,75 @@ router.post('/logout',logoutCurrentUser);
  */
 router.get('/:id',authenticateUser,authorizeAdmin,getUserById);
 
+/**
+ * @openapi
+ * /api/users/{id}:
+ *   put:
+ *     summary: Update user by id (Admin only)
+ *     description: Logs out the updated user details.
+ *     tags:
+ *       - Admin
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - username
+ *               - email
+ *               - password
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 description: name of the user
+ *               email:
+ *                 type: string
+ *                 description: Email of the user
+ *               password:
+ *                 type: string
+ *                 description: Password of the user
+ *                 format: password
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         description: ID of the user to update
+ *         schema:
+ *           type: string
+ *     responses:
+ *       200:
+ *         description: Updated user profile successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 _id:
+ *                   type: string
+ *                 username:
+ *                   type: string
+ *                   description: Username of the user
+ *                 email:
+ *                   type: string
+ *                   description: Email of the user
+ *                 isAdmin:
+ *                   type: boolean
+ *                 message:
+ *                   type: string
+ *                   example: Updated user profile successfully
+ *       404:
+ *         description: User not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: User not found
+ */
+router.put('/:id',authenticateUser,authorizeAdmin,updateUserById)
 
 /**
  * @openapi
