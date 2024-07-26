@@ -72,6 +72,10 @@ const loginUser =  asyncHandler( async(req, res) => {
             const token = createToken(res, existingUser._id);
 
             return res.status(201).json({
+                _id: existingUser._id,
+                username: existingUser.username,
+                email: existingUser.email,
+                isAdmin: existingUser.isAdmin,
             token:token,
             message: 'User login successfull'
             })

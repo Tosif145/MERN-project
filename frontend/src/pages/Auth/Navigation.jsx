@@ -8,7 +8,7 @@ import {
   AiOutlineShoppingCart,
 } from "react-icons/ai";
 import { FaHeart } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { json, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./Navigation.css";
 import { useSelector, useDispatch } from "react-redux";
@@ -90,9 +90,11 @@ const Navigation = () => {
       </div>
 
       <div className="relative">
+        
         <button onClick={toggleDropdown}  className="flex items-center text-gray-8000 foucs:outline-none">
           {userInfo ? <span className="text-white">{userInfo.username}</span> :  (<></>)}
         </button>
+       
       </div>
       <ul>
         <li>
