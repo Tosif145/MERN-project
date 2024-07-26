@@ -63,6 +63,7 @@ const loginUser =  asyncHandler( async(req, res) => {
     const {email, password} = req.body;
 
     const existingUser = await User.findOne({email});
+    console.log(existingUser);
 
     if(existingUser){
         const isValidPassword = await bcrypt.compare(password,  existingUser.password);

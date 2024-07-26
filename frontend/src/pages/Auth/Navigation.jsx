@@ -11,8 +11,15 @@ import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./Navigation.css";
+import { useSelector, useDispatch } from "react-redux";
+import { useLoginMutation } from "../../redux/Api/usersApiSlice";
+import { logout } from "../../redux/Features/auth/authSlice";
+
+
 
 const Navigation = () => {
+    const {userInfo} = useSelector(state => state.auth)
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [showSidebar, setShowSidebar] = useState(false);
 
@@ -27,6 +34,21 @@ const Navigation = () => {
   const closeSidbar = () => {
     setShowSidebar(false);
   };
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+  const {logoutApiCall} = useLoginMutation()
+
+  const logoutHandler = async () => {
+    try {
+       await logoutApiCall().unwrap()
+       dispatch(logout());
+       navigate("/login");
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   return (
     <div
@@ -66,6 +88,12 @@ const Navigation = () => {
           <span className="hidden nav-item-name mt-[3rem]">Favorite</span>{""}
         </Link>
       </div>
+
+      <div className="relative">
+        <button onClick={toggleDropdown}  className="flex items-center text-gray-8000 foucs:outline-none">
+          {userInfo ? <span className="text-white">{userInfo.username}</span> :  (<></>)}
+        </button>
+      </div>
       <ul>
         <li>
         <Link
@@ -94,4 +122,3 @@ const Navigation = () => {
 export default Navigation;
 
 
-// 1:35:35
