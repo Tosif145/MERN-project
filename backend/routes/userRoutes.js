@@ -23,7 +23,7 @@ import {
 
 /**
  * @openapi
- * /api/users:
+ * /api/users/register:
  *   post:
  *     summary: Create user
  *     description: Create a new user
@@ -70,7 +70,7 @@ import {
  *                   type: boolean
  */
 
-router.post('/', createUser);
+router.post('/register', createUser);
 
 
 

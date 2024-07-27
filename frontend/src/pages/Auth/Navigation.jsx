@@ -12,7 +12,7 @@ import { json, Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./Navigation.css";
 import { useSelector, useDispatch } from "react-redux";
-import { useLoginMutation } from "../../redux/Api/usersApiSlice";
+import { useLogoutMutation } from "../../redux/Api/usersApiSlice";
 import { logout } from "../../redux/Features/auth/authSlice";
 
 const Navigation = () => {
@@ -36,7 +36,7 @@ const Navigation = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { logoutApiCall } = useLoginMutation();
+  const [logoutApiCall]  = useLogoutMutation();
 
   const logoutHandler = async () => {
     try {
@@ -185,6 +185,7 @@ const Navigation = () => {
               <Link
                 to="/admin/logout"
                 className="block px-4 py-2 hover:bg-[#0d1b2a]"
+                
                 onClick={logoutHandler}
               >
                 Logout
