@@ -49,10 +49,10 @@ const Register = () => {
 
   return (
     <section className="pl-[10rem] flex flex-row">
-      <div className="mr-[4rem] mt-[5rem]">
+      <div className="mr-[4rem] mt-[5rem] md:w-[70%] w-[40%] sm:w-[80%]">
         <h1 className="text-2xl font-semibold mb-4">Register</h1>
 
-        <form onSubmit={submitHandler} className="container w-[40rem]">
+        <form onSubmit={submitHandler} className="container w-full">
           <div className="my-[2rem]">
             <label
               htmlFor="name"
