@@ -31,6 +31,7 @@ const authenticateUser = asyncHandler( async(req, res, next) => {
 });
 
 
+
 // Admin authentication
 const authorizeAdmin = (req, res, next) => {
    if(req.user && req.user.isAdmin){
