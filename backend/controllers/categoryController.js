@@ -64,10 +64,7 @@ const getAllCategories = asyncHandler(async (req, res) => {
     try {
         const categories = await Category.find({});
 
-        return res.status(200).json({
-            categories,
-            message: 'Categories fetched successfully'
-        })
+        return res.status(200).json(categories)
     } catch (error) {
         console.log(error);
         return res.status(400).json(error);
