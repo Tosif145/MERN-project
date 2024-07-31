@@ -41,6 +41,7 @@ const CategoryList = () => {
       } else {
         setName("");
         toast.success(`${result.name} is created.`);
+        refetch();
       }
     } catch (error) {
       console.error(error);
@@ -110,7 +111,7 @@ const CategoryList = () => {
           handleSubmit={handleCreateCategory}
         />
         <br />
-        <hr className="border-t-4 border-gray-600 opacity-60 h-10 " />
+        <hr className="border-t-2 border-gray-600 opacity-60 h-10 " />
 
         <div className="flex flex-wrap">
           {categories?.map((category) => (

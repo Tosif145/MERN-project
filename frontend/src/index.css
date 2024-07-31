@@ -3,15 +3,34 @@
 @tailwind utilities;
 
 body {
-    background: #0f0f10;
-    color: #fff;
-  }
+  background: #0f0f10;
+  color: #fff;
+}
 
-  input,
-  textarea {
-    color: #000;
-  }
+input,
+textarea {
+  color: #fff;
+}
 
-  /* form{
-    color: #191716bd;
-  } */
+input {
+  background-color: rgb(39, 38, 38) !important;
+  color: white !important;
+}
+
+input::placeholder {
+  color: rgb(198, 198, 198) !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px rgb(39, 38, 38) inset !important;
+  box-shadow: 0 0 0px 1000px rgb(39, 38, 38) inset !important;
+  color: white !important;
+  -webkit-text-fill-color: white !important;
+}
+
+
