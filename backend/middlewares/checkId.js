@@ -5,7 +5,7 @@ const checkId = (req, res,next) => {
         res.status(404)
         throw new Error(`Invalid Object of: ${req.params.id}`)
     }
+   next();   
+};
 
-    next();
-    
-}
+export default checkId;

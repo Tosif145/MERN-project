@@ -42,7 +42,7 @@ const addProduct = asyncHandler( async(req, res) =>{
 
     } catch (error) {
         console.error(error);
-        res.status(500).json(error.message)
+        res.status(500).json('Internal server error')
     }
 });
 
@@ -82,7 +82,7 @@ const updateProductDetails = asyncHandler(async(req, res) =>{
 
     } catch (error) {
         console.error(error);
-        res.status(500).json(error.message);
+        res.status(500).json('Internal server error');
     }
 });
 
@@ -103,7 +103,7 @@ const fetchProducts = asyncHandler(async(req, res) => {
         });
     } catch (error) {
         console.error(error);
-        res.status(500).json(error.message);
+        res.status(500).json('Internal server error');
     }
 });
 
@@ -131,7 +131,7 @@ const fetchProductsById = asyncHandler(async(req, res) => {
 
     } catch (error) {
         console.error(error);
-        res.status(500).json(error.message);
+        res.status(500).json('Internal server error');
     }
 });
 
@@ -149,7 +149,7 @@ const fetchAllProducts = asyncHandler(async (req, res) => {
         
     } catch (error) {
         console.error(error);
-        res.status(500).json(error.message);
+        res.status(500).json('Internal server error');
     }
 });
 
@@ -168,7 +168,7 @@ const removeProduct = asyncHandler( async (req, res) => {
         })
     } catch (error) {
         console.error(error);
-        res.status(400).json(error.message);
+        res.status(400).json('Internal server error');
     }
 });
 
@@ -208,10 +208,43 @@ const addProductReview = asyncHandler(async(req, res) => {
 
     } catch (error) {
         console.error(error);
-        res.status(400).json(error.message)
+        res.status(400).json(error.message);
     }
     }
 );
+
+// Fetch top products
+const fetchTopProducts = asyncHandler( async (req, res) => {
+    try {
+        const products = await Product.find({}).sort({rating: -1}).limit(4);
+ 
+        if(!products){
+            return res.status(404).json({error: 'No products found!'});
+        }
+
+        return res.status(200).json(products);
+
+    } catch (error) {
+        console.error(error);
+        res.status(400).json('Internal server error')
+    }
+});
+
+//Fetch new products
+const fetchNewProducts = asyncHandler(async (req, res) => {
+    try {
+        const products = await Product.find({}).sort({_id: -1}).limit(5);
+        
+        if(!products){
+            return res.status(404).json({error: 'No products found!'});
+        }
+
+        res.status(200).json(products)
+    } catch (error) {
+        console.error(error);
+        res.status(400).json(error.message);
+    }
+});
 
 export {
   addProduct,
@@ -221,4 +254,7 @@ export {
   fetchAllProducts,
   removeProduct,
   addProductReview,
+  fetchTopProducts,
+  fetchNewProducts
 } 
+
