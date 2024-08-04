@@ -11,8 +11,9 @@ import { fileURLToPath } from 'url';
 // Routes import
 import HomeRoutes from './routes/HomeRoutes.js'; 
 import userRoutes from './routes/userRoutes.js';
-import categoryRoutes from './routes/CategoryRoutes.js';
-import productRoutes from './routes/ProductRoutes.js';
+import categoryRoutes from './routes/categoryRoutes.js';
+import productRoutes from './routes/productRoutes.js';
+import uploadRoutes from './routes/uploadRoutes.js';
 
 
 
@@ -37,6 +38,8 @@ app.use('/', HomeRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/category',  categoryRoutes);
 app.use('/api/products',productRoutes);
+app.use('/api/upload', uploadRoutes);
+
 
 
 
