@@ -12,7 +12,8 @@ textarea {
   color: #fff;
 }
 
-input {
+input,
+textarea{
   background-color: rgb(39, 38, 38) !important;
   color: white !important;
 }

@@ -24,7 +24,7 @@ router.get('/top', fetchTopProducts);
 
 router.get('/new', fetchNewProducts);
 
-router.put('/:id',authenticateUser, authorizeAdmin, formidable(), updateProductDetails);
+router.put('/update/:id',authenticateUser, authorizeAdmin, formidable(), updateProductDetails);
 
 router.post('/:id/reviews', authenticateUser,checkId,addProductReview);
 

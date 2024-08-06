@@ -5,8 +5,8 @@ import path from 'path';
 dotenv.config();
 
 const fileFilter = (file, mime, res) => {
-  const filetypes = /jpe?g|png|webp/;
-  const mimetypes = /image\/jpe?g|image\/png|image\/webp/;
+  const filetypes = /jpe?g|png|webp|avif/;
+  const mimetypes = /image\/jpe?g|image\/png|image\/avif|image\/webp/;
 
   const extname = path.extname(file).toLowerCase();
 

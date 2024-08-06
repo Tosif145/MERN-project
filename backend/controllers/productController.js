@@ -5,11 +5,13 @@ import Product from '../models/productModel.js';
 // Add product
 const addProduct = asyncHandler( async(req, res) =>{
     try {
-        const {name, description, price , category, quantity, brand} = req.fields;
+        const {name, description, price , category, quantity, brand, countInStock,image} = req.fields;
         
 
         // validation
         switch(true){
+            case !image:
+                return res.status(422).json({error: 'Image is required!'});
             case !name || !name.trim():
                 return res.status(422).json({error: 'Name is required!'});
             case !description || !description.trim():
@@ -22,6 +24,8 @@ const addProduct = asyncHandler( async(req, res) =>{
                 return res.status(422).json({error: 'Quantity should be a positive number!'});
             case !brand ||!brand.trim():
                 return res.status(422).json({error: 'Brand is required!'});
+            case !countInStock:
+                return res.json({ error: "Count in stock is required" });
             default:
                 break;
         }
@@ -36,37 +40,59 @@ const addProduct = asyncHandler( async(req, res) =>{
             category,
             quantity,
             brand,
+            countInStock,
+            image:product.image,
             message: 'Product added successfully'
-        })
+        }) 
 
 
     } catch (error) {
         console.error(error);
-        res.status(500).json('Internal server error')
+        res.status(500).json(error.message)
     }
 });
 
 const updateProductDetails = asyncHandler(async(req, res) =>{
     try {
-        const {name, description, price , category, quantity, brand, image} = req.fields;
+        const {name, description, price , category, quantity, brand,countInStock, image} = req.fields;
 
         const product = await Product.findById(req.params.id);
         if(!product){
             return res.status(404).json({error: 'Product not found!'});
         }
 
-        if(product){
-            product.name = name || product.name;
-            product.description = description || product.description;
-            product.price = price || product.price;
-            product.category = category || product.category;
-            product.quantity = quantity || product.quantity;
-            product.brand = brand || product.brand;
-            product.image = image || product.image;
-        }
+        // Validation
+    switch (true) {
+        case !image: 
+          return res.json({ error: "Image is required" });
+        case !name:
+          return res.json({ error: "Name is required" });
+        case !brand:
+          return res.json({ error: "Brand is required" });
+        case !description:
+          return res.json({ error: "Description is required" });
+        case !price:
+          return res.json({ error: "Price is required" });
+        case !category:
+          return res.json({ error: "Category is required" });
+        case !quantity:
+          return res.json({ error: "Quantity is required" });
+        case !countInStock:
+            return res.json({ error: "Count in stock is required" });
+        default:
+            break;
+        
+      }
 
-        const updatedProduct = await product.save();
-   
+       
+
+        const updatedProduct =await Product.findByIdAndUpdate(
+            req.params.id,
+            { ...req.fields },
+            { new: true }
+          );
+       
+        await updatedProduct.save();
 
         return res.status(200).json({
             id: updatedProduct.id,
@@ -76,36 +102,45 @@ const updateProductDetails = asyncHandler(async(req, res) =>{
             category: updatedProduct.category,
             quantity: updatedProduct.quantity,
             brand: updatedProduct.brand,
+            countInStock:updatedProduct.countInStock,
             message: 'Product updated successfully'
         })
 
 
     } catch (error) {
         console.error(error);
-        res.status(500).json('Internal server error');
+        res.status(500).json(error?.error);
     }
 });
 
 // Fetch products
-const fetchProducts = asyncHandler(async(req, res) => {
+const fetchProducts = asyncHandler(async (req, res) => {
     try {
-        const pageSize = 6;
-        const keyword = req.query.keyword ? {name: {$regex : req.query.keyword, $options: "i"}} : {};
-
-        const count = await Product.countDocuments({...keyword});
-        const products = await Product.find({...keyword}).limit(pageSize);
-
-        res.status(200).json({
-            products,
-            page: 1,
-            pages: Math.ceil(count / pageSize),
-            hasMore: false,
-        });
+      const pageSize = 6;
+  
+      const keyword = req.query.keyword 
+        ? {
+            name: {
+              $regex: req.query.keyword,
+              $options: "i",
+            },
+          }
+        : {};
+  
+      const count = await Product.countDocuments({ ...keyword });
+      const products = await Product.find({ ...keyword }).limit(pageSize);
+  
+      res.json({
+        products,
+        page: 1,
+        pages: Math.ceil(count / pageSize),
+        hasMore: false,
+      });
     } catch (error) {
-        console.error(error);
-        res.status(500).json('Internal server error');
+      console.error(error);
+      res.status(500).json({ error: "Server Error" });
     }
-});
+  });
 
 // Fetch product by id
 const fetchProductsById = asyncHandler(async(req, res) => {
@@ -126,6 +161,7 @@ const fetchProductsById = asyncHandler(async(req, res) => {
             quantity: product.quantity,
             brand: product.brand,
             image: product.image,
+            countInStock: product.countInStock,
             message: 'Product fetched successfully' 
         });
 
