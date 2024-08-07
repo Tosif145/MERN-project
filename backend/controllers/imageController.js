@@ -11,9 +11,9 @@ const fileFilter = (file, mime, res) => {
   const extname = path.extname(file).toLowerCase();
 
   if (!(filetypes.test(extname) && mimetypes.test(mime))) {
-    res.status(400).json({ error: 'Images only.' });
-    throw new Error('Images only.');
+    throw new Error('Image only')
   }
+
 };
 
 const uploadImage = async (req, res) => {
@@ -27,7 +27,9 @@ const uploadImage = async (req, res) => {
     const buffer = req.file.buffer; 
 
   
-    fileFilter(file, mimetype, res);
+   fileFilter(file, mimetype, res);
+
+    
 
     // Upload to Cloudinary using the buffer
     const result =  cloudinary.uploader.upload_stream({ 
@@ -39,7 +41,7 @@ const uploadImage = async (req, res) => {
       }
       // console.log(result);
       
-      res.status(200).json({ 
+      return res.status(200).json({ 
         success: true,
         message: 'Image uploaded successfully.',  
         image: result.secure_url 

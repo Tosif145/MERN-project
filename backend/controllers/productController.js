@@ -52,6 +52,8 @@ const addProduct = asyncHandler( async(req, res) =>{
     }
 });
 
+
+// Update product details
 const updateProductDetails = asyncHandler(async(req, res) =>{
     try {
         const {name, description, price , category, quantity, brand,countInStock, image} = req.fields;
@@ -113,6 +115,7 @@ const updateProductDetails = asyncHandler(async(req, res) =>{
     }
 });
 
+
 // Fetch products
 const fetchProducts = asyncHandler(async (req, res) => {
     try {
@@ -142,14 +145,15 @@ const fetchProducts = asyncHandler(async (req, res) => {
     }
   });
 
+
 // Fetch product by id
 const fetchProductsById = asyncHandler(async(req, res) => {
     try {
         const product = await Product.findById(req.params.id);
 
         if(!product){
-            res.status(404)
-            throw new Error('Product not found!');
+            return res.status(404)
+            .json('Product not found!');
         }
 
         return res.status(200).json({
@@ -163,13 +167,14 @@ const fetchProductsById = asyncHandler(async(req, res) => {
             image: product.image,
             countInStock: product.countInStock,
             message: 'Product fetched successfully' 
-        });
+        }); 
 
     } catch (error) {
         console.error(error);
         res.status(500).json('Internal server error');
     }
 });
+
 
 // Fetch all products
 const fetchAllProducts = asyncHandler(async (req, res) => {
@@ -190,6 +195,7 @@ const fetchAllProducts = asyncHandler(async (req, res) => {
 });
 
 
+
 //Remove product
 const removeProduct = asyncHandler( async (req, res) => {
     try {
@@ -207,6 +213,7 @@ const removeProduct = asyncHandler( async (req, res) => {
         res.status(400).json('Internal server error');
     }
 });
+
 
 // Add review
 const addProductReview = asyncHandler(async(req, res) => {
@@ -249,6 +256,7 @@ const addProductReview = asyncHandler(async(req, res) => {
     }
 );
 
+
 // Fetch top products
 const fetchTopProducts = asyncHandler( async (req, res) => {
     try {
@@ -265,6 +273,8 @@ const fetchTopProducts = asyncHandler( async (req, res) => {
         res.status(400).json('Internal server error')
     }
 });
+
+
 
 //Fetch new products
 const fetchNewProducts = asyncHandler(async (req, res) => {
