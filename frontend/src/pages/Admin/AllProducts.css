@@ -1,0 +1,47 @@
+/* Scoped CSS for Product Component */
+
+/* Container */
+.product-container {
+  margin-left: 200px;
+  margin-right: 40px;
+  padding: 1rem;
+  max-width: 100%;
+}
+
+/* Header */
+.product-header {
+  margin-bottom: 2rem;
+}
+
+.product-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+/* Product Grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+/* Sidebar */
+.product-sidebar {
+  padding: 1rem;
+}
+
+/* Responsive styles */
+@media (max-width: 790px) {
+  .product-grid {
+    grid-template-columns: 1fr; /* Single column layout on small screens */
+  }
+}
+
+@media (max-width: 500px) {
+  .product-container {
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0.5rem;
+  }
+}

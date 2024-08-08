@@ -158,7 +158,7 @@ router.put('/:categoryId',authenticateUser, authorizeAdmin, updateCategory);
  *         description: Not authorized as an admin
  */
 
-router.get('/categories',authenticateUser, authorizeAdmin, getAllCategories);
+router.get('/categories',getAllCategories);
 
 /**
  * @openapi

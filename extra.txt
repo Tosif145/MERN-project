@@ -1,0 +1,276 @@
+/* Scoped CSS for Product Component */
+
+/* Container */
+.product-container {
+  margin-left: 200px;
+  margin-right: 40px;
+  padding: 1rem;
+  max-width: 100%;
+}
+
+/* Header */
+.product-header {
+  margin-bottom: 2rem;
+}
+
+.product-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+/* Product Grid */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+/* Product Item */
+.product-item {
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid #ddd; */
+  border-radius: 0.5rem;
+  overflow: hidden;
+  background-color: rgb(39, 38, 38);
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Product Content */
+.product-content {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+/* Product Image */
+.product-image {
+  width: 100%;
+  height: 200px; /* Fixed height */
+  object-fit: cover;
+}
+
+/* Product Details */
+.product-details {
+  padding: 1rem;
+}
+
+.product-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.product-name {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.product-date {
+  font-size: 0.875rem;
+  color: #888;
+}
+
+.product-description {
+  font-size: 0.875rem;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.product-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Update Button */
+.update-button {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  background-color: #ec4899;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.update-icon {
+  width: 1rem;
+  height: 1rem;
+  margin-left: 0.5rem;
+}
+
+/* Product Price */
+.product-price {
+  font-size: 1rem;
+  font-weight: medium;
+}
+
+/* Sidebar */
+.product-sidebar {
+  padding: 1rem;
+}
+
+/* Responsive styles */
+@media (max-width: 790px) {
+
+  .product-grid {
+    grid-template-columns: 1fr; /* Single column layout on small screens */
+  }
+
+  .product-image {
+    height: 150px; /* Adjusted image height for small screens */
+  }
+
+  .product-details {
+    padding: 0.5rem;
+  }
+
+  .product-name {
+    font-size: 1rem;
+  }
+
+  .product-description {
+    font-size: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .update-button {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .product-price {
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 500px) {
+  .product-image {
+   display: none;
+  }
+
+  .product-details {
+    padding: 0.25rem;
+  }
+
+  .product-name {
+    font-size: 0.875rem;
+  }
+
+  .product-description {
+    font-size: 0.625rem;
+  }
+
+  .update-button {
+    font-size: 0.625rem;
+    padding: 0.25rem;
+  }
+
+  .product-price {
+    font-size: 0.75rem;
+  }
+}
+
+
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import moment from "moment";
+import { useAllProductsQuery } from "../../redux/Api/productApiSlice";
+import AdminMenu from "./AdminMenu";
+import Loader from "../../components/Loader";
+import './AllProducts.css'
+
+const AllProducts = () => {
+  const { data: products, isLoading, isError, refetch } = useAllProductsQuery();
+  useEffect(() =>{
+    refetch();
+  },[refetch]);
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
+  if (isError) {
+    return <div>Error fetching products</div>;
+  }
+
+  
+  return (
+    <div className="product-container">
+    <div className="product-header">
+      <div className="product-title">
+        All Products ({products.length})
+      </div>
+      <div className="product-grid">
+        {products.map((product) => (
+          <Link
+            key={product._id}
+            to={`/admin/products/update/${product._id}`}
+            className="product-item"
+          >
+            <div className="product-content">
+              <img
+                src={product.image}
+                alt={product.name}
+                className="product-image"
+              />
+              <div className="product-details">
+                <div className="product-info">
+                  <h5 className="product-name">{product?.name}</h5>
+                  <p className="product-date">
+                    {moment(product.createdAt).format("MMMM Do YYYY")}
+                  </p>
+                </div>
+                <p className="product-description">
+                  {product?.description?.substring(0, 160)}...
+                </p>
+                <div className="product-actions">
+                  <Link
+                    to={`/admin/products/update/${product._id}`}
+                    className="update-button"
+                  >
+                    Update product
+                    <svg
+                      className="update-icon"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 14 10"
+                    >
+                      <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M1 5h12m0 0L9 1m4 4L9 9"
+                      />
+                    </svg>
+                  </Link>
+                  <p className="product-price">$ {product?.price}</p>
+                </div>
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </div>
+    <div className="product-sidebar">
+      <AdminMenu />
+    </div>
+  </div>
+  
+  );
+};
+
+export default AllProducts;

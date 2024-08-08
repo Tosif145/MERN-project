@@ -1,0 +1,102 @@
+.card {
+    --bg-card: hwb(240 31% 67% / 0.493);
+    --primary: #6d28d9;
+    --primary-800: #4c1d95;
+    --primary-shadow: #2e1065;
+    --light: #d9d9d9;
+    --bg-linear: linear-gradient(0deg, var(--primary) 50%, var(--light) 125%);
+
+    display: flex;
+    flex-direction: column;
+    gap: 2.6rem;
+    padding: 1rem;
+    width: auto;
+    background-color: var(--bg-card);
+    border-radius: 1rem;
+}
+
+.image_container {
+    overflow: hidden;
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    height: 8rem;
+    background-color: var(--primary-800);
+    border-radius: 0.5rem;
+}
+
+.image_container .image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 3rem;
+    fill: var(--light);
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--light);
+    text-transform: capitalize;
+}
+.title .date{
+    font-size: 0.875rem;
+    color: hwb(0 77% 21% / 0.874);
+    margin-right: 0.5rem;
+}
+.description {
+    font-size: 0.875rem;
+    color: var(--light);
+}
+
+.action {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--light);
+}
+
+.btn{
+    width: 60%;
+}
+.update-button {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.25rem;
+    width: 100%;
+    height: 45px;
+    background-color: #ec4899;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.update-icon {
+    width: 1rem;
+    height: 1rem;
+    margin-left: 0.5rem;
+}
+
+
+  

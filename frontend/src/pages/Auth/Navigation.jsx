@@ -124,7 +124,7 @@ const Navigation = () => {
 
         {dropdownOpen && userInfo && (
           <ul
-            className={`absolute right-0 mt-2 mr-14 space-y-2 bg-[#0d0d0d]  text-white ${
+            className={`absolute right-0 mt-2 mr-8 space-y-2 bg-[#0d0d0d]  text-white ${
               !userInfo.isAdmin ? "-top-20" : "-top-80"
             }`}
           >
@@ -183,7 +183,7 @@ const Navigation = () => {
             </li>
             <li>
               <Link
-                to="/logout"
+                to="/login"
                 className="block px-4 py-2 hover:bg-[#0d1b2a]"
                 
                 onClick={logoutHandler}

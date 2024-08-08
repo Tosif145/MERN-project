@@ -290,13 +290,13 @@ const fetchNewProducts = asyncHandler(async (req, res) => {
         console.error(error);
         res.status(400).json(error.message);
     }
-});
+}); 
 
 export {
   addProduct,
   updateProductDetails,
   fetchProducts,
-  fetchProductsById,
+  fetchProductsById, 
   fetchAllProducts,
   removeProduct,
   addProductReview,
